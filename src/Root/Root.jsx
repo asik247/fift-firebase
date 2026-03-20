@@ -4,9 +4,9 @@ import { Outlet } from 'react-router';
 
 const Root = () => {
     return (
-        <div>
+        <div >
             <Navbar></Navbar>
-            <div className='flex justify-between items-center mt-10'>
+            <div className='flex justify-center items-center mt-4'>
                 <Outlet></Outlet>
             </div>
         </div>
