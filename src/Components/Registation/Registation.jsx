@@ -15,7 +15,8 @@ const Registation = () => {
         setSuccess('');
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        const terms = e.target.terms.checked;
+        console.log(email, password,terms);
         // Validation code here;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
@@ -25,6 +26,10 @@ const Registation = () => {
         }
         if (!passwordRegex.test(password)) {
             alert("Password must be 6+ char, 1 uppercase, 1 number");
+            return;
+        }
+        if(!terms){
+            alert("please accept terms")
             return;
         }
         createUser(email, password)
@@ -77,6 +82,13 @@ const Registation = () => {
 
                                             {show ? <FaEye /> : <FaEyeSlash />}
                                         </button>
+                                    </div>
+                                    {/* Accept Taitariya */}
+                                    <div>
+                                        <label className="label">
+                                            <input type="checkbox"  className="checkbox" name='terms' />
+                                            Accept Me!
+                                        </label>
                                     </div>
                                     <button className="btn btn-neutral mt-4">Registaion</button>
                                     {/* Error and success message code here */}
