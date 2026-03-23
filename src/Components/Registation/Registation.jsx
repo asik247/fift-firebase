@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router';
 const Registation = () => {
     const { createUser } = useContext(AuthContext);
     // Error and success message state here;
@@ -97,6 +98,10 @@ const Registation = () => {
                                     }
                                     {error && <p className='text-red-600 text-xl font-bold'>{error}</p>}
                                 </fieldset>
+                                <div className='font-bold text-xl'>
+                                    Already have'n account ? please 
+                                    <Link to={'/login'} className='text-blue-700 font-bold text-xl underline'> LogIn </Link>
+                                </div>
                             </form>
                         </div>
                     </div>
