@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router';
-import { sendEmailVerification } from 'firebase/auth';
+import { sendEmailVerification, updateProfile } from 'firebase/auth';
 const Registation = () => {
     const { createUser } = useContext(AuthContext);
     // Error and success message state here;
@@ -17,8 +17,10 @@ const Registation = () => {
         setSuccess('');
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const name = e.target.name.value;
+        const photo = e.target.photo.value;
         const terms = e.target.terms.checked;
-        console.log(email, password,terms);
+        console.log(email, password,terms,name,photo);
         // Validation code here;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
@@ -44,6 +46,11 @@ const Registation = () => {
                 }).catch(error=>{
                     console.log(error.message);
                 })
+            const profile = {
+                displayName:name,
+                photoURL:photo
+            }
+            updateProfile(res.user,profile)
 
             }).catch(error => {
                 console.log(error.message);
@@ -70,6 +77,12 @@ const Registation = () => {
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
                                 <fieldset className="fieldset">
+                                    {/* Name field */}
+                                    <label className="label">Name</label>
+                                    <input type="text" name='name' className="input" placeholder="Your Name" />
+                                    {/* PhotoURL field */}
+                                    <label className="label">Photo</label>
+                                    <input type="text" name='photo' className="input" placeholder="PhotoURL" />
                                     {/* Email field */}
                                     <label className="label">Email</label>
                                     <input type="email" name='email' className="input" placeholder="Email" />

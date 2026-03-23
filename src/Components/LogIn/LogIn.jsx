@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -7,6 +7,7 @@ import { auth } from '../../firebase/firebase.init';
 const LogIn = () => {
     const { signInUser } = useContext(AuthContext);
     const emailRef = useRef(null);
+    const [showUser,setShowUser] = useState("");
     const handleSignIn = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -15,6 +16,7 @@ const LogIn = () => {
         signInUser(email,password)
         .then(res=>{
             console.log(res.user);
+            setShowUser(res.user)
             if(!res.user.emailVerified){
                 alert("Not email verify")
             }
@@ -62,6 +64,12 @@ const LogIn = () => {
                                     <Link to={'/registation'} className='text-blue-700 font-bold text-xl underline'> Registation </Link>
                                 </div>
                             </form>
+                            <div>
+                                {showUser && <div>
+                                        <h1 className='font-bold text-xl'>{showUser.displayName}</h1>
+                                        <img src={showUser.photoURL} alt="" />
+                                 </div>}
+                            </div>
                         </div>
                     </div>
                 </div>
