@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Link } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../../firebase/firebase.init';
 
 const LogIn = () => {
     const { signInUser } = useContext(AuthContext);
+    const emailRef = useRef(null);
     const handleSignIn = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -15,6 +18,18 @@ const LogIn = () => {
             if(!res.user.emailVerified){
                 alert("Not email verify")
             }
+        }).catch(error=>{
+            console.log(error.message);
+        })
+    }
+    // password rese handler code start here;
+    const handlerPasswordRest = (e)=>{
+        e.preventDefault();
+        const email = emailRef.current.value;
+        console.log(email);
+        sendPasswordResetEmail(auth,email)
+        .then(()=>{
+            alert('email cheacked and password reset!')
         }).catch(error=>{
             console.log(error.message);
         })
@@ -33,12 +48,13 @@ const LogIn = () => {
                                 <fieldset className="fieldset">
                                     {/* Email field */}
                                     <label className="label">Email</label>
-                                    <input type="email" name='email' className="input" placeholder="Email" />
+                                    <input type="email" name='email' className="input" placeholder="Email" ref={emailRef} />
                                     {/* Passwowrd field */}
                                     <label className="label">Password</label>
                                     <input type="password" name='password' className="input" placeholder="Password" />
 
-                                    <div><a className="link link-hover">Forgot password?</a></div>
+                                    <div onClick={handlerPasswordRest}><a className="link link-hover">Forgot password?</a></div>
+
                                     <button className="btn btn-neutral mt-4">LogIn</button>
                                 </fieldset>
                                 <div className='font-bold text-xl'>
