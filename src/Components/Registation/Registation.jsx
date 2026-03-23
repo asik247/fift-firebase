@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router';
+import { sendEmailVerification } from 'firebase/auth';
 const Registation = () => {
     const { createUser } = useContext(AuthContext);
     // Error and success message state here;
@@ -37,6 +38,12 @@ const Registation = () => {
             .then(res => {
                 console.log(res.user);
                 setSuccess(res.user)
+                sendEmailVerification(res.user)
+                .then(()=>{
+                    alert('varify email then logIn')
+                }).catch(error=>{
+                    console.log(error.message);
+                })
 
             }).catch(error => {
                 console.log(error.message);

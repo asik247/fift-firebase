@@ -12,6 +12,9 @@ const LogIn = () => {
         signInUser(email,password)
         .then(res=>{
             console.log(res.user);
+            if(!res.user.emailVerified){
+                alert("Not email verify")
+            }
         }).catch(error=>{
             console.log(error.message);
         })
