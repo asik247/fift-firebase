@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../Context/AuthContext';
 const Registation = () => {
+    const {createUser} = useContext(AuthContext);
+    console.log(createUser);
    
     return (
         <div>
