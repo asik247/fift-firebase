@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router';
 import { sendEmailVerification, updateProfile } from 'firebase/auth';
 const Registation = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser,loading } = useContext(AuthContext);
     // Error and success message state here;
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState("");
@@ -111,7 +111,10 @@ const Registation = () => {
                                             Accept Me!
                                         </label>
                                     </div>
-                                    <button className="btn btn-neutral mt-4">Registaion</button>
+                                    <button disabled={loading} className="btn btn-neutral mt-4">
+                                        {loading ? "Creating...":'Register'}
+                                    </button>
+
                                     {/* Error and success message code here */}
                                     {
                                         success && <p className='text-green-600 text-xl font-bold'>SuccessFully Account Create!</p>
